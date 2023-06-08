@@ -1,21 +1,22 @@
 --Code made for test purpose and may not be optimized - Vamato
 
 local maths = require(game:GetService("ReplicatedStorage").Modules.Maths)
+print(maths)
 print("Server started!")
 
-local rnd = Random.new()
+local function randomVector()
+   local rnd = Random.new()
+   return Vector3.new(
+      rnd:NextInteger(-50,50),
+      rnd:NextInteger(0,50),
+      rnd:NextInteger(-50,50)
+   )
+end
 
-local p1 = Vector3.new(
-   rnd:NextInteger(-30,30),
-   0,
-   rnd:NextInteger(-30,30)
-)
-
-local p2 = Vector3.new(
-   rnd:NextInteger(-30,30),
-   0,
-   rnd:NextInteger(-30,30)
-)
+local p1 = randomVector()
+local p2 = randomVector()
+local p3 = randomVector()
+local p4 = randomVector()
 
 local function display(pos,color)
    local part = Instance.new("Part")
@@ -35,25 +36,27 @@ local function line(a:Vector3,b:Vector3)
    local res = maths.Line(a,b)
    local new = Instance.new("Part")
    new.CFrame = res.CFrame
-   new.Size = Vector3.new(.7,.7,res.Width+.2)
+   new.Size = Vector3.new(.7,.7,res.Width)
    new.Anchored = true
    new.Color = Color3.new(0,1,0)
 
    new.Parent = workspace
 end
 
-local off = Vector3.new(20,0,0)
-
 display(p1,Color3.new(0,0,1))
 display(p2,Color3.new(0,0,1))
 
-display(p1+off,Color3.new(1,0,0))
-display(p2-off,Color3.new(1,0,0))
+display(p3,Color3.new(1,0,0))
+display(p4,Color3.new(1,0,0))
 
 local pos = {}
-local n = 20
+local n = 40
 for i=0,n do
-   local point = maths.VectorCubic(p1,p1+off,p2,p2-off,i/n)
+   local point = maths.Lerp.Vector(maths.Lerp.Cubic,
+      i/n,
+      p1,p3,p4,p2
+   )
+
    table.insert(pos,point)
 end
 
