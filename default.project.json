@@ -6,6 +6,12 @@
       "$className":"ReplicatedStorage",
       "Modules":{
         "$path":"src/modules"
+      },
+      "Plugin":{
+        "$className":"Folder",
+        "Main":{
+          "$path":"src/plugin"
+        }
       }
     },
     "ServerScriptService":{
